@@ -8,12 +8,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Cog, School } from "lucide-react";
+import { ArrowBigLeftDash, Cog, School } from "lucide-react";
 import { useState } from "react";
 import AdminAuth from "../auth/AdminAuth";
 import LecturerAuth from "../auth/LecturerAuth";
 
 export function Roles() {
+  
   const [activeTab, setActiveTab] = useState(0);
   return (
     <Dialog>
@@ -51,8 +52,9 @@ export function Roles() {
         )}
         {activeTab == 1 ? <LecturerAuth /> : ""}
         {activeTab == 2 ? <AdminAuth /> : ""}
-        <DialogFooter>
-         {activeTab !== 0 ?  <Button onClick={()=>{setActiveTab(0)}} >Back</Button>: ""}
+        
+        <DialogFooter className="block">
+         {activeTab !== 0 ?  <ArrowBigLeftDash onClick={()=>{setActiveTab(0)}} />: ""}
         </DialogFooter>
       </DialogContent>
     </Dialog>

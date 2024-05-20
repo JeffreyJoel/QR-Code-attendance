@@ -1,30 +1,37 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../../../Firebase";
-import { doc, getDoc } from "firebase/firestore";
-// import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { Input } from "../ui/input";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../../../Firebase"; // Import 'auth' and 'db' from Firebase
+import { doc, getDoc, setDoc } from "firebase/firestore"; // Import 'doc' and 'getDoc' from Firestore
+// import { useNavigate } from "react-router-dom"; // Import 'useNavigate' hook from react-router-dom
 import { Label } from "../ui/label";
+import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useState } from "react";
 
-function LecturerAuth() {
-  // const navigate = useNavigate();
-
+function CreateCourse() {
+//   const navigate = useNavigate();
   const [course, setCourse] = useState("");
   const [password, setPassword] = useState("");
-  const handleSignUp = async () => {
+
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+
     try {
-      const userCredential = await signInWithEmailAndPassword(
+      const userCredential = await createUserWithEmailAndPassword(
         auth,
         `${course}@gmail.com`,
         password
       );
       const user = userCredential.user;
 
-      // localStorage.setItem("UID", user.uid);
-      validateUser(user.uid);
-      console.log("logged in");
+      await setDoc(doc(db, "courses", user.uid), {
+        Course: course,
+        Email: `${course}@gmail.com`,
+        isSuperAdmin: false,
+      }).then(() => {
+        validateUser(user.uid);
+      });
+
+      console.log("New User Account created");
     } catch (error) {
       console.log(error);
     }
@@ -32,7 +39,7 @@ function LecturerAuth() {
 
   const validateUser = async (id) => {
     try {
-      const docRef = doc(db, "courses", id);
+      const docRef = doc(db, "admins", id);
       const snapshot = await getDoc(docRef);
 
       if (snapshot.exists()) {
@@ -53,16 +60,16 @@ function LecturerAuth() {
           <div className="">
             <div className="">
               <h2 className="text-lg font-bold mt-4">Course</h2>
-              <p className="my-4">Enter course-id and password to Log in</p>
+              <p className="my-4">Create Course</p>
             </div>
             <div className="mb-4">
               <div className="mb-4">
-                <Label htmlFor="email" className="">
-                  Course id
+                <Label htmlFor="firstname" className="">
+                  Course Id
                 </Label>
                 <Input
                   className="mt-2"
-                  placeholder="Enter your course id"
+                  placeholder="Enter your firstname"
                   type="text"
                   onChange={(e) => {
                     setCourse(e.target.value);
@@ -70,7 +77,7 @@ function LecturerAuth() {
                 />
               </div>
               <div className="mb-4">
-                <Label>Password</Label>
+                <Label htmlFor="password">Password</Label>
                 <Input
                   className="mt-2"
                   placeholder="Enter your password"
@@ -87,14 +94,14 @@ function LecturerAuth() {
               </div>
             </div>
             <div className="-footer text-center pt-0 px-lg-2 px-1">
-              <p className="mb-2 text-sm mx-auto">
+              {/* <p className="mb-2 text-sm mx-auto">
                 Don&apos;t have an account?
                 <Link to="/" style={{ textDecoration: "none" }}>
                   <a className=" ml-4 text-primary text-gradient font-weight-bold">
                     Register
                   </a>
                 </Link>
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
@@ -103,4 +110,4 @@ function LecturerAuth() {
   );
 }
 
-export default LecturerAuth;
+export default CreateCourse;
