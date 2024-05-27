@@ -1,13 +1,12 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../../Firebase";
 import { doc, getDoc } from "firebase/firestore";
-// import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import CreateCourse from "../course/CreateCourse";
+import toast from "react-hot-toast";
 
 function LecturerAuth() {
   // const navigate = useNavigate();
@@ -17,19 +16,27 @@ function LecturerAuth() {
   const [isRegisterClicked, setIsRegisterClicked] = useState(false);
 
   const handleSignUp = async () => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        `${course}@gmail.com`,
-        password
-      );
-      const user = userCredential.user;
+    if (course == "" && password == "") {
+      toast.error("one or more fields are empty");
+    }
+    else{
+      try {
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          `${course}@gmail.com`,
+          password
+        );
+        const user = userCredential.user;
+  
+        // localStorage.setItem("UID", user.uid);
+        validateUser(user.uid);
+        console.log("logged in");
+        toast.success("logged in")
+      } catch (error) {
+        console.log(error);
+        toast.error(error.message)
 
-      // localStorage.setItem("UID", user.uid);
-      validateUser(user.uid);
-      console.log("logged in");
-    } catch (error) {
-      console.log(error);
+      }
     }
   };
 
@@ -43,6 +50,8 @@ function LecturerAuth() {
         // navigate(`/Dashboard?name=${id}`);
       } else {
         console.error("User not found");
+        toast.error("User not found")
+
       }
     } catch (err) {
       console.error("Validation error:", err.message);
@@ -102,14 +111,14 @@ function LecturerAuth() {
                 <div className="-footer text-center pt-0 px-lg-2 px-1">
                   <p className="mb-2 text-sm mx-auto">
                     Don&apos;t have an account?
-                    <Link to="/" style={{ textDecoration: "none" }}>
-                      <a
+                    <span style={{ textDecoration: "none" }}
+                      
                         className=" ml-4 text-primary text-gradient font-weight-bold"
-                        onClick={handleRegisterClick}
-                      >
+                        onClick={handleRegisterClick}>
+                    
                         Register
-                      </a>
-                    </Link>
+                      
+                    </span>
                   </p>
                 </div>
               </div>

@@ -4,10 +4,12 @@ import "./index.css"; // Import your CSS file
 import AdminDashboard from "./pages/dashboards/AdminDashboard.jsx";
 import { AppContextProvider } from "./context/ContextProvider.jsx";
 import CourseDashboard from "./pages/dashboards/CourseDashboard.jsx";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <div className="dark">
+       <Toaster />
       <AppContextProvider>
         <BrowserRouter>
           <Routes>

@@ -1,14 +1,13 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../../Firebase"; // Import 'auth' and 'db' from Firebase
 import { doc, getDoc, setDoc } from "firebase/firestore"; // Import 'doc' and 'getDoc' from Firestore
-import { useNavigate } from "react-router-dom"; // Import 'useNavigate' hook from react-router-dom
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 function RegisterAdmin() {
-  const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -17,27 +16,34 @@ function RegisterAdmin() {
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
+if(email == "" && password == ""){
+  toast.error("one or more fields are empty")
+}
+else{
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
 
-      await setDoc(doc(db, "admins", user.uid), {
-        Firstname: firstName,
-        Lastname: lastName,
-        Email: email,
-        isSuperAdmin: true,
-      }).then(() => {
-        validateUser(user.uid);
-      });
+    await setDoc(doc(db, "admins", user.uid), {
+      Firstname: firstName,
+      Lastname: lastName,
+      Email: email,
+      isSuperAdmin: true,
+    }).then(() => {
+      validateUser(user.uid);
+    });
 
-      console.log("New User Account created");
-    } catch (error) {
-      console.log(error);
-    }
+    console.log("New Admin Account created");
+    toast.success("New Admin Account created")
+  } catch (error) {
+    console.log(error);
+    toast.error(error.message)
+  }
+}
   };
 
   const validateUser = async (id) => {

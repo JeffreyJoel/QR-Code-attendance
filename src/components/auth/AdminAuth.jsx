@@ -1,32 +1,40 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../../Firebase";
-import { doc, getDoc } from "firebase/firestore"; 
-import { Link, useNavigate } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import RegisterAdmin from "./RegisterAdmin";
+import toast from "react-hot-toast";
 
 function AdminAuth() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isRegisterClicked, setIsRegisterClicked] = useState(false);
 
   const handleSignUp = async () => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
+    if (email == "" && password == "") {
+      toast.error("one or more fields are empty");
+    } else {
+      try {
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        const user = userCredential.user;
 
-      // localStorage.setItem("UID", user.uid);
-      validateUser(user.uid);
-      console.log("logged in successfully");
-    } catch (error) {
-      console.log(error);
+        // localStorage.setItem("UID", user.uid);
+        validateUser(user.uid);
+        console.log("logged in successfully");
+        toast.success("logged in successfully");
+      } catch (error) {
+        console.log(error.message);
+        toast.error(error.message);
+      }
     }
   };
 
@@ -40,13 +48,13 @@ function AdminAuth() {
         navigate(`/admin`);
       } else {
         console.error("User not found");
+        toast.error("User not found");
+
       }
     } catch (err) {
       console.error("Validation error:", err.message);
     }
   };
-
-  const [isRegisterClicked, setIsRegisterClicked] = useState(false);
 
   const handleRegisterClick = () => {
     setIsRegisterClicked(true);
@@ -92,7 +100,9 @@ function AdminAuth() {
                   />
                 </div>
                 <div className="text-center mt-8">
-                  <Button className="w-1/2" onClick={handleSignUp}>
+                  <Button className="w-1/2" onClick={()=>{
+                    handleSignUp()
+                  }}>
                     Log in
                   </Button>
                 </div>
@@ -100,14 +110,14 @@ function AdminAuth() {
               <div className="-footer text-center pt-0 px-lg-2 px-1">
                 <p className="mb-2 text-sm mx-auto">
                   Don&apos;t have an account?
-                  <Link to="/" style={{ textDecoration: "none" }}>
-                    <a
-                      className=" ml-4 text-primary text-gradient font-weight-bold"
-                      onClick={handleRegisterClick}
-                    >
-                      Register
-                    </a>
-                  </Link>
+                  <span
+                    
+                    style={{ textDecoration: "none" }}
+                    className=" ml-4 text-primary text-gradient font-weight-bold"
+                    onClick={handleRegisterClick}
+                  >
+                    Register
+                  </span>
                 </p>
               </div>
             </div>
