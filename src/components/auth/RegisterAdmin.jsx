@@ -6,12 +6,15 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function RegisterAdmin() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -53,7 +56,7 @@ else{
 
       if (snapshot.exists()) {
         // Redirect to dashboard if user exists
-        // navigate(`/Dashboard?name=${id}`);
+        navigate(`/admin`);
       } else {
         console.error("User not found");
       }

@@ -7,9 +7,10 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import CreateCourse from "../course/CreateCourse";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function LecturerAuth() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [course, setCourse] = useState("");
   const [password, setPassword] = useState("");
@@ -47,7 +48,7 @@ function LecturerAuth() {
 
       if (snapshot.exists()) {
         // Redirect to dashboard if user exists
-        // navigate(`/Dashboard?name=${id}`);
+        navigate(`/course-dashboard/${id}`);
       } else {
         console.error("User not found");
         toast.error("User not found")
