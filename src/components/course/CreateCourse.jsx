@@ -1,14 +1,14 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../../Firebase"; // Import 'auth' and 'db' from Firebase
 import { doc, getDoc, setDoc } from "firebase/firestore"; // Import 'doc' and 'getDoc' from Firestore
-// import { useNavigate } from "react-router-dom"; // Import 'useNavigate' hook from react-router-dom
+import { useNavigate } from "react-router-dom";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useState } from "react";
 
 function CreateCourse() {
-//   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [course, setCourse] = useState("");
   const [password, setPassword] = useState("");
 
@@ -25,7 +25,7 @@ function CreateCourse() {
 
       await setDoc(doc(db, "courses", user.uid), {
         Course: course,
-        Email: `${course}@gmail.com`,
+        Email: `${course.toLowerCase()}@gmail.com`,
         isSuperAdmin: false,
       }).then(() => {
         validateUser(user.uid);
@@ -39,12 +39,12 @@ function CreateCourse() {
 
   const validateUser = async (id) => {
     try {
-      const docRef = doc(db, "admins", id);
+      const docRef = doc(db, "courses", id);
       const snapshot = await getDoc(docRef);
 
       if (snapshot.exists()) {
         // Redirect to dashboard if user exists
-        // navigate(`/Dashboard?name=${id}`);
+        navigate(`/course-dashboard/${id}`);
       } else {
         console.error("User not found");
       }
@@ -64,12 +64,12 @@ function CreateCourse() {
             </div>
             <div className="mb-4">
               <div className="mb-4">
-                <Label htmlFor="firstname" className="">
+                <Label htmlFor="" className="">
                   Course Id
                 </Label>
                 <Input
                   className="mt-2"
-                  placeholder="Enter your firstname"
+                  placeholder="Enter course code"
                   type="text"
                   onChange={(e) => {
                     setCourse(e.target.value);
@@ -89,7 +89,7 @@ function CreateCourse() {
               </div>
               <div className="text-center mt-8">
                 <Button className="w-1/2" onClick={handleSignUp}>
-                  Log in
+                  Create
                 </Button>
               </div>
             </div>

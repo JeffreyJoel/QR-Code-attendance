@@ -1,19 +1,24 @@
+import { useCourses } from "@/context/CourseContext";
 import OverviewCard from "../shared/OverviewCard";
-import CourseOverview from "./CourseOverview";
+// import CourseOverview from "../course/CourseOverview";
 import StudentOverview from "./StudentOverview";
+import { useStudents } from "@/context/StudentContext";
 
 export default function Overview() {
+  const {students}  = useStudents();
+  const { courses } = useCourses();
+
   return (
     <div className="mt-16">
       <div className="flex flex-col gap-6 lg:flex-row  mb-0">
         <OverviewCard
           title="Students"
-          mainContent={0}
+          mainContent={students.length}
           // subContent="+20.1% from last month"
         />
         <OverviewCard
           title="Courses"
-          mainContent={0}
+          mainContent={courses.length}
           // subContent="+180.1% from last month"
         />
         {/* <OverviewCard
@@ -22,9 +27,9 @@ export default function Overview() {
           // subContent="+19% from last month"
         /> */}
       </div>
-      <div className="flex flex-col md:flex-row m-2 mt-0 mb-0">
+      {/* <div className="flex flex-col md:flex-row m-2 mt-0 mb-0">
         <CourseOverview />
-      </div>
+      </div> */}
       <div className="flex flex-col md:flex-row m-2 mt-0 mb-0">
         <StudentOverview />
       </div>

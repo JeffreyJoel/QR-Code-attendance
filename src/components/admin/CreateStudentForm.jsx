@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-const CreateStudentForm = (onSubmit) => {
+const CreateStudentForm = ({ onSubmit }) => {
   const [loading, setLoading] = useState(false);
   const [fullName, setFullname] = useState("");
   const [matNumber, setMatNumber] = useState("");
@@ -21,8 +21,8 @@ const CreateStudentForm = (onSubmit) => {
   const [department, setDepartment] = useState("");
   const [email, setEmail] = useState("");
 
-  const handleSignUp = async (e) => {
-    e.preventDefault();
+  const handleSignUp = async () => {
+    // e.preventDefault();
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -52,7 +52,7 @@ const CreateStudentForm = (onSubmit) => {
 
   const validateUser = async (id) => {
     try {
-      const docRef = doc(db, "admins", id);
+      const docRef = doc(db, "students", id);
       const snapshot = await getDoc(docRef);
 
       if (snapshot.exists()) {
@@ -70,10 +70,8 @@ const CreateStudentForm = (onSubmit) => {
   return (
     <DialogContent className="sm:max-w-[425px] md:max-w-[550px]">
       <DialogHeader>
-        <DialogTitle>Create Token</DialogTitle>
+        <DialogTitle>Create Student</DialogTitle>
         <DialogDescription>
-          {/* Make changes to your profile here. Click save when you are done. */}
-          Parameters the contract specifies to be passed in during deployment.
         </DialogDescription>
       </DialogHeader>
       <div className=" py-4">
