@@ -34,7 +34,7 @@ export function CourseProvider({ children }) {
     };
   }, [])
 
-  console.log(courses);
+  // console.log(courses);
 
   const value = {
     courses

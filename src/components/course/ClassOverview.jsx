@@ -10,7 +10,7 @@ export default function ClassOverview() {
   const { courses } = useCourses();
   const foundCourse = courses.find((course) => course?.id === id);
   const { classData } = useClassData(foundCourse?.id);
-  console.log(classData);
+  // console.log(courses);
 
   return (
     <div className="mt-20">

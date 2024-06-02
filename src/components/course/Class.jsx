@@ -17,6 +17,7 @@ function Class() {
     console.log(`Class ID: ${id}, Duration: ${duration}`);
     setClassDuration(duration);
     setClassId(id);
+    console.log(courses);
   }
   console.log(`Class ID: ${classId}, Duration: ${classDuration}`);
 
@@ -31,7 +32,7 @@ function Class() {
           <QRCode value={classId} className="mx-auto" />
          <div className="text-center mt-8">
          <p>{`Class ID: ${classId} `}</p>
-          <p>{`Duration: ${classDuration}`}</p>
+          <p>{`Duration: ${classDuration} minutes`}</p>
           <p>{`Week: ${classData?.length}`}</p>
          </div>
         </div>

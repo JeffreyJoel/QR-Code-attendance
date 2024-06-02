@@ -8,8 +8,8 @@ const AdminDashboard = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-semibold">Admin Dashboard</h1>
-      <div className="mt-4 relative">
+      <h1 className="text-3xl font-semibold w-full fixed top-0 py-6 z-40">Admin Dashboard</h1>
+      <div className="mt-12 relative">
         <DashboardTabNavigation
           tabs={[
             { id: 0, label: "Overview" },
