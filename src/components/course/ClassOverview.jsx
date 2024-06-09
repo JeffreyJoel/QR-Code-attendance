@@ -1,6 +1,5 @@
 import { useCourses } from "@/context/CourseContext";
 import ClassTable from "./ClassTable";
-import PropTypes from "prop-types";
 import useClassData from "@/hooks/useClassData";
 import { useParams } from "react-router-dom";
 
@@ -30,6 +29,3 @@ export default function ClassOverview() {
     </div>
   );
 }
-ClassOverview.propTypes = {
-  classData: PropTypes.array.isRequired,
-};

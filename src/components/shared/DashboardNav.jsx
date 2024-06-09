@@ -13,8 +13,8 @@ const DashboardTabNavigation = ({ tabs, selectedTab, setTab }) => {
   }
 
   return (
-    <div className="fixed left-0 z-30 right-0 mx-auto mb-4 w-full border bg-background">
-      <div className="container px-3 py-3 lg:px-5 lg:pl-14">
+    <div className="fixed z-30 left-0  px-3  right-0 mb-4 w-full border bg-background">
+      <div className="container py-3 lg:px-5 lg:pl-14">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-start rtl:justify-end">
             <div className="flex">

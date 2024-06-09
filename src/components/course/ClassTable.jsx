@@ -14,7 +14,7 @@ export default function ClassTable({ tableData }) {
       {tableData?.length < 1 ? (
         <div className="mt-6 w-full overflow-hidden">
           <p className="text-center text-red-700">
-            You have not created any students
+            You have not created any classes
           </p>
           <div className="mx-auto h-10 w-10"></div>
         </div>

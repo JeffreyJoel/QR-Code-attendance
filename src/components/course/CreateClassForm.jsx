@@ -12,20 +12,29 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useStudents } from "@/context/StudentContext";
 import { useParams } from "react-router-dom";
+import { useCourses } from "@/context/CourseContext";
+import useClassData from "@/hooks/useClassData";
 
 const CreateClassForm = ({ onSubmit }) => {
   const [loading, setLoading] = useState(false);
   const [duration, setDuration] = useState("");
   const {students} = useStudents();
   const { id } = useParams();
+  const { courses } = useCourses();
+  const foundCourse = courses.find((course) => course?.id === id);
+  const { classData } = useClassData(foundCourse?.id);
 
   const handleSignUp = async () => {
     try {
+      const studentEntries = students.map(student => ({
+        ...student,
+        attended: false,
+      }));
         const docRef = await addDoc(
         collection(db, "courses", id, "classes"),
         {
-          week: 1,
-          students: students,
+          week: classData?.length,
+          students: studentEntries,
           Date: serverTimestamp(),
         }
       );

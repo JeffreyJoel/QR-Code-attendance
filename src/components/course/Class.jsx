@@ -28,9 +28,13 @@ function Class() {
   }
 
   return (
-    <div className="mt-32">
+    <div className="mt-12">
       <div className="p-4 px-0 w-full">
-        <CreateClass onSubmit={handleCreateClass} />
+        <h2 className="text-4xl">{`Week: ${classData?.length + 1}`}</h2>
+       <div className="mt-12">
+       <CreateClass onSubmit={handleCreateClass} />
+
+       </div>
       </div>
 
       {(classId && classDuration) && (
@@ -39,7 +43,7 @@ function Class() {
           <div className="text-center mt-8">
             <p>{`Class ID: ${classId}`}</p>
             <p>{`Duration: ${classDuration} minutes`}</p>
-            <p>{`Weeks: ${classData?.length}`}</p>
+            <p>{`Week: ${classData?.length}`}</p>
           </div>
         </div>
       )}
