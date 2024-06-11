@@ -3,10 +3,10 @@
   
     const classesArray = Array.isArray(classes) ? classes : [];
     classesArray.forEach((classObj, index) => {
-      const totalStudents = classObj.students.length;
+      const totalStudents =  Object.values(classObj.students).length;
       let attendedCount = 0;
   
-      classObj.students.forEach(student => {
+      Object.values(classObj.students).forEach(student => {
         if (student.attended) {
           attendedCount++;
         }

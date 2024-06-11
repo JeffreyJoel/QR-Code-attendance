@@ -18,7 +18,7 @@ import useClassData from "@/hooks/useClassData";
 const CreateClassForm = ({ onSubmit }) => {
   const [loading, setLoading] = useState(false);
   const [duration, setDuration] = useState("");
-  const {students} = useStudents();
+  const { students } = useStudents();
   const { id } = useParams();
   const { courses } = useCourses();
   const foundCourse = courses.find((course) => course?.id === id);
@@ -26,21 +26,23 @@ const CreateClassForm = ({ onSubmit }) => {
 
   const handleSignUp = async () => {
     try {
-      const studentEntries = students.map(student => ({
+      const studentEntries = students.map((student) => ({
         ...student,
         attended: false,
       }));
-        const docRef = await addDoc(
-        collection(db, "courses", id, "classes"),
-        {
-          week: classData?.length,
-          students: studentEntries,
-          Date: serverTimestamp(),
-        }
-      );
+      let studentObj = {}
+      studentEntries.forEach((student, i) => {
+        studentObj[student.id] = student;
+      });
+      console.log(studentObj);
+      const docRef = await addDoc(collection(db, "courses", id, "classes"), {
+        week: classData?.length,
+        students: studentObj,
+        Date: serverTimestamp(),
+      });
 
       console.log("New User Account created");
-    
+
       onSubmit(docRef.id, duration);
     } catch (error) {
       console.log(error);
@@ -77,7 +79,7 @@ const CreateClassForm = ({ onSubmit }) => {
           }}
           disabled={loading}
         >
-          {loading? "Loading..." : "Create"}
+          {loading ? "Loading..." : "Create"}
         </Button>
       </DialogFooter>
     </DialogContent>

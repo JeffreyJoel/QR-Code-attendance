@@ -3,11 +3,14 @@ import PropTypes from "prop-types";
 
 export default function ClassTable({ tableData }) {
   ClassTable.propTypes = {
-    tableData: PropTypes.array,
+    tableData: PropTypes.object,
     headers: PropTypes.array,
   };
 
   const { students } = useStudents();
+  tableData?.map((classData) => {
+    console.log(classData?.students);
+  })
 
   return (
     <div className="relative overflow-x-auto rounded">
@@ -35,9 +38,8 @@ export default function ClassTable({ tableData }) {
               ))}
             </tr>
           </thead>
-
           <tbody>
-            {students?.map((data, index) => (
+            {students.map((data, index) => (
               <tr key={index} className="border-b dark:border-gray-70">
                 <td className="cursor-pointer whitespace-nowrap px-6 py-4 font-medium">
                   {index + 1}
@@ -46,11 +48,14 @@ export default function ClassTable({ tableData }) {
                   {data?.fullname}
                 </td>
                 {tableData?.map((classData) => (
-                  <>
-                    <td className="cursor-pointer whitespace-nowrap px-6 py-4 font-medium">
-                      {classData.students[index].attended ? "Present" : "Absent"}
-                    </td>
-                  </>
+                  <td
+                    className="cursor-pointer whitespace-nowrap px-6 py-4 font-medium"
+                    key={index}
+                  >
+                     {Object.values(classData.students).find(student => student.id === data.id)?.attended
+           ? "Present"
+            : "Absent"}
+                  </td>
                 ))}
               </tr>
             ))}

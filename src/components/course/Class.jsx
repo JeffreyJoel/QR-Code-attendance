@@ -39,7 +39,7 @@ function Class() {
 
       {(classId && classDuration) && (
         <div className="p-4 px-0 w-full">
-          <QRCode value={classId} className="mx-auto" />
+          <QRCode value={`https://qr-code-attendance.vercel.app/?classId=${classId}&courseId=${id}`} title="Attendance"size={200} bgColor="black" fgColor="white" className="mx-auto" />
           <div className="text-center mt-8">
             <p>{`Class ID: ${classId}`}</p>
             <p>{`Duration: ${classDuration} minutes`}</p>
