@@ -13,9 +13,9 @@ import { Button } from "../ui/button";
 const DeleteModal = ({onDelete}) => {
 
   return (
-    <div>
+    <div className="text-center w-fit">
       <Dialog>
-        <DialogTrigger><Trash2/></DialogTrigger>
+        <DialogTrigger className="mx-auto text-[14px] text-red-600 "><Trash2/></DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Are you absolutely sure?</DialogTitle>

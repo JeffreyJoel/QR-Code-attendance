@@ -1,8 +1,8 @@
-import { Pen} from "lucide-react";
 import PropTypes from "prop-types";
 import DeleteModal from "../shared/DeleteModal";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../Firebase";
+import EditStudent from "./EditStudent";
 
 export default function Table({ tableData, headers }) {
   Table.propTypes = {
@@ -60,8 +60,8 @@ export default function Table({ tableData, headers }) {
                       deleteStudent(data?.id)
                     }}/>
                   </span>
-                  <span>
-                    <Pen />
+                  <span className="">
+                  <EditStudent id={data?.id}/>
                   </span>
                 </td>
               </tr>

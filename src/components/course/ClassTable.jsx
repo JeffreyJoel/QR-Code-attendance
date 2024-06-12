@@ -20,7 +20,7 @@ export default function ClassTable({ tableData }) {
   const deleteClass = async (classID) => {
     await deleteDoc(doc(db, "courses", id, "classes", classID));
     console.log("deleted");
-    location.reload();
+    // location.reload();
   };
 
   return (
@@ -43,10 +43,19 @@ export default function ClassTable({ tableData }) {
                 Student
               </th>
               {tableData?.map((classItem, index) => (
-                <th scope="col" className="px-6 py-3 mx-auto" key={index}>
-                  Week {index + 1} <DeleteModal onDelete={()=>{
-                    deleteClass(classItem.id)
-                  }}/>
+                <th
+                  scope="col"
+                  className="px-6 py-3 mx-auto"
+                  key={classItem?.id}
+                >
+                  Week {index + 1}{" "}
+                  <span>
+                    <DeleteModal
+                      onDelete={() => {
+                        deleteClass(classItem.id);
+                      }}
+                    />
+                  </span>
                 </th>
               ))}
             </tr>
