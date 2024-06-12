@@ -1,16 +1,27 @@
 import { useStudents } from "@/context/StudentContext";
 import PropTypes from "prop-types";
+import DeleteModal from "../shared/DeleteModal";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../../Firebase";
+import { useParams } from "react-router-dom";
 
 export default function ClassTable({ tableData }) {
   ClassTable.propTypes = {
     tableData: PropTypes.object,
     headers: PropTypes.array,
   };
+  const { id } = useParams();
 
   const { students } = useStudents();
   tableData?.map((classData) => {
     console.log(classData?.students);
-  })
+  });
+
+  const deleteClass = async (classID) => {
+    await deleteDoc(doc(db, "courses", id, "classes", classID));
+    console.log("deleted");
+    location.reload();
+  };
 
   return (
     <div className="relative overflow-x-auto rounded">
@@ -33,7 +44,9 @@ export default function ClassTable({ tableData }) {
               </th>
               {tableData?.map((classItem, index) => (
                 <th scope="col" className="px-6 py-3 mx-auto" key={index}>
-                  Week {index + 1}
+                  Week {index + 1} <DeleteModal onDelete={()=>{
+                    deleteClass(classItem.id)
+                  }}/>
                 </th>
               ))}
             </tr>
@@ -52,9 +65,11 @@ export default function ClassTable({ tableData }) {
                     className="cursor-pointer whitespace-nowrap px-6 py-4 font-medium"
                     key={index}
                   >
-                     {Object.values(classData.students).find(student => student.id === data.id)?.attended
-           ? "Present"
-            : "Absent"}
+                    {Object.values(classData.students).find(
+                      (student) => student.id === data.id
+                    )?.attended
+                      ? "Present"
+                      : "Absent"}
                   </td>
                 ))}
               </tr>

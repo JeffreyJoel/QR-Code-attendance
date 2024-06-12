@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import toast from "react-hot-toast";
 
 const CreateStudentForm = ({ onSubmit }) => {
   const [loading, setLoading] = useState(false);
@@ -60,9 +61,12 @@ const CreateStudentForm = ({ onSubmit }) => {
         // navigate(`/Dashboard?name=${id}`);
       } else {
         console.error("User not found");
+        toast.error("User not found")
       }
     } catch (err) {
       console.error("Validation error:", err.message);
+      toast.error(err.message)
+
     }
   };
   // console.log(response);

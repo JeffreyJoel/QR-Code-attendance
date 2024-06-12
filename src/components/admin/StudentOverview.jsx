@@ -18,7 +18,7 @@ export default function StudentOverview() {
 
         <CreateStudent/>
       </div>
-      <Table headers={["Name", "MatNumber", "Department", "Level"]} tableData={students}/>
+      <Table headers={["Name", "MatNumber", "Department", "Level", "Actions"]} tableData={students}/>
     </div>
   );
 }

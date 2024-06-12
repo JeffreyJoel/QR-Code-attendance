@@ -3,6 +3,7 @@ import OverviewCard from "../shared/OverviewCard";
 // import CourseOverview from "../course/CourseOverview";
 import StudentOverview from "./StudentOverview";
 import { useStudents } from "@/context/StudentContext";
+import CoursesOverview from "./CoursesOverview";
 
 export default function Overview() {
   const {students}  = useStudents();
@@ -32,6 +33,9 @@ export default function Overview() {
       </div> */}
       <div className="flex flex-col md:flex-row m-2 mt-0 mb-0">
         <StudentOverview />
+      </div>
+      <div className="flex flex-col md:flex-row m-2 mt-0 mb-0">
+        <CoursesOverview />
       </div>
     </div>
   );

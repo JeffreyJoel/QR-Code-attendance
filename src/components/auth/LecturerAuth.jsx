@@ -59,9 +59,9 @@ function LecturerAuth() {
     }
   };
 
-  const handleRegisterClick = () => {
-    setIsRegisterClicked(true);
-  };
+  // const handleRegisterClick = () => {
+  //   setIsRegisterClicked(true);
+  // };
 
   return (
     <>
@@ -109,7 +109,7 @@ function LecturerAuth() {
                     </Button>
                   </div>
                 </div>
-                <div className="-footer text-center pt-0 px-lg-2 px-1">
+                {/* <div className="-footer text-center pt-0 px-lg-2 px-1">
                   <p className="mb-2 text-sm mx-auto">
                     Don&apos;t have an account?
                     <span style={{ textDecoration: "none" }}
@@ -121,7 +121,7 @@ function LecturerAuth() {
                       
                     </span>
                   </p>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

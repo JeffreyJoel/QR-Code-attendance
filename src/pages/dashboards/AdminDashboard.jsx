@@ -1,3 +1,4 @@
+import CoursesOverview from "@/components/admin/CoursesOverview";
 import Overview from "@/components/admin/Overview";
 import StudentOverview from "@/components/admin/StudentOverview";
 import DashboardTabNavigation from "@/components/shared/DashboardNav";
@@ -25,7 +26,7 @@ const AdminDashboard = () => {
           tabs={[
             { id: 0, label: "Overview" },
             { id: 1, label: "Students" },
-            // { id: 2, label: "Courses" },
+            { id: 2, label: "Courses" },
           ]}
           selectedTab={tab}
           setTab={setTab}
@@ -33,7 +34,7 @@ const AdminDashboard = () => {
 
         <div className="p-4 px-0 sm:mx-auto">
           {tab == 0 ? <Overview /> : ""}
-          {/* {tab == 2 ? <COverview /> : ""} */}
+          {tab == 2 ? <CoursesOverview /> : ""}
           {tab == 1 ? <StudentOverview /> : ""}
         </div>
       </div>

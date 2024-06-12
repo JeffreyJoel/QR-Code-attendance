@@ -1,20 +1,20 @@
-import { Pen} from "lucide-react";
-import PropTypes from "prop-types";
-import DeleteModal from "../shared/DeleteModal";
 import { deleteDoc, doc } from "firebase/firestore";
+import PropTypes from "prop-types";
 import { db } from "../../../Firebase";
+import DeleteModal from "../shared/DeleteModal";
+import { useNavigate } from "react-router-dom";
 
-export default function Table({ tableData, headers }) {
-  Table.propTypes = {
+export default function CourseTable({ tableData, headers }) {
+  const navigate = useNavigate();
+
+  CourseTable.propTypes = {
     tableData: PropTypes.array,
     headers: PropTypes.array,
   };
-
-  const deleteStudent = async (id) => {
-
-    await deleteDoc(doc(db, "students", id));
+  const deleteCourse = async (id) => {
+    await deleteDoc(doc(db, "courses", id));
     console.log("deleted");
-    location.reload();
+    // location.reload();
   };
 
   return (
@@ -22,7 +22,7 @@ export default function Table({ tableData, headers }) {
       {tableData.length < 1 ? (
         <div className="mt-6 w-full overflow-hidden">
           <p className="text-center text-red-700">
-            You have not created any students
+            You have not created any courses
           </p>
           <div className="mx-auto h-10 w-10"></div>
         </div>
@@ -39,30 +39,31 @@ export default function Table({ tableData, headers }) {
           </thead>
 
           <tbody>
-            {tableData.map((data, index) => (
+            {tableData?.map((data, index) => (
               <tr key={index} className="border-b dark:border-gray-70">
                 <td className="cursor-pointer whitespace-nowrap px-6 py-4 font-medium">
-                  {data?.fullname}
+                  {data?.id}
+                </td>
+                <td
+                  className="cursor-pointer whitespace-nowrap px-6 py-4 font-medium"
+                  onClick={() => {
+                    navigate(`/course-dashboard/${data?.id}`);
+                  }}
+                >
+                  {data?.Course}
                 </td>
                 <td className="cursor-pointer whitespace-nowrap px-6 py-4 font-medium">
-                  {data?.matNumber}
+                  {data?.Email}
                 </td>
                 <td className="cursor-pointer whitespace-nowrap px-6 py-4 font-medium">
-                  {data?.department}
+                  {data?.password}
                 </td>
                 <td className="cursor-pointer whitespace-nowrap px-6 py-4 font-medium">
-                  {data?.level}
-                </td>
-                <td className="cursor-pointer whitespace-nowrap px-6 py-4 font-medium flex">
-                  <span className="mr-3">
-                    {" "}
-                    <DeleteModal onDelete={()=>{
-                      deleteStudent(data?.id)
-                    }}/>
-                  </span>
-                  <span>
-                    <Pen />
-                  </span>
+                  <DeleteModal
+                    onDelete={() => {
+                      deleteCourse(data?.id);
+                    }}
+                  />
                 </td>
               </tr>
             ))}
